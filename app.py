@@ -23,7 +23,7 @@ def cadastrar_tarefa():
     tarefa = {'descricao': descricao, 'data_vencimento': data_vencimento, 'prioridade': prioridade, 'concluida': concluida}
     tarefas.append(tarefa)
 
-    tarefas[:] = sorted(tarefas, key=ordenar_tarefas)  # Reordena a lista original
+    tarefas[:] = sorted(tarefas, key=ordenar_tarefas)
     return redirect(url_for('index'))
 
 @app.route('/editar_tarefa/<int:task_id>', methods=['GET', 'POST'])
@@ -41,7 +41,7 @@ def editar_tarefa(task_id):
             tarefa['prioridade'] = prioridade
             tarefa['concluida'] = concluida
 
-            tarefas[:] = sorted(tarefas, key=ordenar_tarefas)  # Reordena a lista original
+            tarefas[:] = sorted(tarefas, key=ordenar_tarefas)
             return redirect(url_for('index'))
         else:
             tarefa = tarefas[task_id]
@@ -54,7 +54,7 @@ def excluir_tarefa(task_id):
     if task_id >= 0 and task_id < len(tarefas):
         tarefas.pop(task_id)
 
-        tarefas[:] = sorted(tarefas, key=ordenar_tarefas)  # Reordena a lista original
+        tarefas[:] = sorted(tarefas, key=ordenar_tarefas)
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
