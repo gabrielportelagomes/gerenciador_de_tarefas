@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Tarefa</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Editar Tarefa</h1>
+
+    <form method="POST">
+        <input type="hidden" name="task_id" value="{{ task_id }}">
+        <label for="descricao">Descrição:</label>
+        <input type="text" name="descricao" value="{{ tarefa['descricao'] }}" required>
+        <br>
+        <label for="data_vencimento">Data de Vencimento (DDMMAAAA):</label>
+        <input type="text" name="data_vencimento" value="{{ tarefa['data_vencimento'] }}" required>
+        <br>
+        <label for="prioridade">Prioridade:</label>
+        <select name="prioridade">
+            <option value="Baixa" {% if tarefa['prioridade'] == 'Baixa' %} selected {% endif %}>Baixa</option>
+            <option value="Média" {% if tarefa['prioridade'] == 'Média' %} selected {% endif %}>Média</option>
+            <option value="Alta" {% if tarefa['prioridade'] == 'Alta' %} selected {% endif %}>Alta</option>
+        </select>
+        <br>
+        <label for="concluida">Concluída:</label>
+        <input type="checkbox" name="concluida" {% if tarefa['concluida'] %} checked {% endif %}>
+        <br>
+        <input type="submit" value="Editar Tarefa">
+    </form>
+</body>
+</html>
