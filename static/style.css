@@ -49,6 +49,7 @@ input[type="submit"] {
 ul {
   list-style: none;
   padding: 0;
+  margin-top: 50px;
 }
 
 li {
@@ -72,8 +73,7 @@ a:hover {
 }
 
 p {
-  min-width: 50%;
-  max-width: 60%;
+  width: 50%;
   text-align: start;
 }
 
