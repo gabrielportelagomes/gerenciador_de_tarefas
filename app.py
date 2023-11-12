@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -7,6 +8,13 @@ tarefas = []
 def ordenar_tarefas(tarefa):
     prioridades = {'Baixa': 0, 'Média': 1, 'Alta': 2}
     return (-prioridades[tarefa['prioridade']], tarefa['data_vencimento'])
+
+def validar_data(data):
+    try:
+        datetime.strptime(data, '%d/%m/%Y')
+        return True
+    except ValueError:
+        return False
 
 @app.route('/')
 def index():
@@ -19,6 +27,14 @@ def cadastrar_tarefa():
     data_vencimento = request.form.get('data_vencimento')
     prioridade = request.form.get('prioridade')
     concluida = False
+
+    if not validar_data(data_vencimento):
+        return '''
+        <script>
+            alert("Formato de data inválido. Use o formato DD/MM/AAAA.");
+            window.location.replace("/"); // Redirect to the home page
+        </script>
+        '''
 
     tarefa = {'descricao': descricao, 'data_vencimento': data_vencimento, 'prioridade': prioridade, 'concluida': concluida}
     tarefas.append(tarefa)
@@ -34,6 +50,14 @@ def editar_tarefa(task_id):
             data_vencimento = request.form.get('data_vencimento')
             prioridade = request.form.get('prioridade')
             concluida = request.form.get('concluida') == 'on'
+
+            if not validar_data(data_vencimento):
+                return '''
+                <script>
+                    alert("Formato de data inválido. Use o formato DD/MM/AAAA.");
+                    window.location.replace("/editar_tarefa/{0}"); // Redirect to the edit page
+                </script>
+                '''.format(task_id)
 
             tarefa = tarefas[task_id]
             tarefa['descricao'] = descricao
@@ -59,4 +83,3 @@ def excluir_tarefa(task_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
-

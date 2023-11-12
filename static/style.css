@@ -73,6 +73,7 @@ a:hover {
 
 p {
   min-width: 50%;
+  max-width: 60%;
   text-align: start;
 }
 
