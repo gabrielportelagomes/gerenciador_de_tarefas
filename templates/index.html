@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Gerenciador de Tarefas</title>
+</head>
+<body>
+    <h1>Gerenciador de Tarefas</h1>
+
+    <form method="POST" action="/cadastrar_tarefa">
+        <label for="descricao">Descrição:</label>
+        <input type="text" name="descricao" required>
+        <br>
+        <label for="data_vencimento">Data de Vencimento (DD/MM/AAAA):</label>
+        <input type="text" name="data_vencimento" required>
+        <br>
+        <label for="prioridade">Prioridade:</label>
+        <select name="prioridade">
+            <option value="Baixa">Baixa</option>
+            <option value="Média">Média</option>
+            <option value="Alta">Alta</option>
+        </select>
+        <br>
+        <input type="submit" value="Cadastrar Tarefa">
+    </form>
+
+    <ul>
+      {% for task in tarefas %}
+          <li>
+              <p class="{% if task['concluida'] %}tarefa-concluida{% else %}tarefa-nao-concluida{% endif %}">
+                {{ task['descricao'] }} - {{ task['data_vencimento'] }} - {{ task['prioridade'] }}
+              </p>
+              <a href="/excluir_tarefa/{{ loop.index0 }}">Excluir</a>
+              <a href="/editar_tarefa/{{ loop.index0 }}">Editar</a>
+          </li>
+      {% endfor %}
+    </ul>
+    
+  
+</body>
+</html>
